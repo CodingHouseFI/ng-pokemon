@@ -8,9 +8,35 @@ var app = angular.module('pokeApp', ['ui.bootstrap'])
     return $http({
       url: 'http://pokeapi.co/api/v2/pokedex/1/',
       method: 'GET'
+    })
+    .catch(function(err) {
+      console.error(err);
     });
   };
 
+  this.getOne = function(id) {
+    return $http.get(`http://pokeapi.co/api/v2/pokemon/${id}/`)
+      .then(function(res) {
+        console.log('res:', res);
+      })
+  };
+
+})
+
+.controller('pokeModalCtrl', function($scope, $uibModalInstance, Pokemon, selectedPokemon) {
+  console.log('pokeModalCtrl!', selectedPokemon);
+
+  Pokemon.getOne(selectedPokemon.entry_number);
+
+  $scope.pokemon = selectedPokemon;
+
+  $scope.ok = function() {
+    $uibModalInstance.close();
+  };
+
+  $scope.cancel = function() {
+    $uibModalInstance.dismiss();
+  };
 })
 
 .controller('mainCtrl', function($scope, Pokemon, $uibModal) {
@@ -18,9 +44,6 @@ var app = angular.module('pokeApp', ['ui.bootstrap'])
   Pokemon.getAll()
   .then(function(res) {
     $scope.pokeList = res.data.pokemon_entries;
-  })
-  .catch(function(err) {
-    console.error(err);
   });
 
   $scope.selectPokemon = function(pokemon) {
@@ -28,7 +51,7 @@ var app = angular.module('pokeApp', ['ui.bootstrap'])
       controller: 'pokeModalCtrl',
       templateUrl: 'pokeModal.html',
       resolve: {
-        pokemon: pokemon
+        selectedPokemon: pokemon
       }
     });
 
@@ -42,16 +65,3 @@ var app = angular.module('pokeApp', ['ui.bootstrap'])
   };
 })
 
-.controller('pokeModalCtrl', function($scope, $uibModalInstance, pokemon) {
-  console.log('pokeModalCtrl!', pokemon);
-
-  $scope.pokemon = pokemon;
-
-  $scope.ok = function() {
-    $uibModalInstance.close();
-  };
-
-  $scope.cancel = function() {
-    $uibModalInstance.dismiss();
-  };
-});
