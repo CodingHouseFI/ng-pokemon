@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ngPokemon</title>
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+  <script src="/bower_components/angular/angular.js"></script>
+  <script src="/main.js"></script>
+</head>
+<body ng-app='pokeApp' ng-controller='mainCtrl'>
+  <div class="container">
+    <h1 class="text-center">ngPokemon!</h1>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat='pokemon in pokeList'>
+          <td>{{pokemon.entry_number}}</td>
+          <td>{{pokemon.pokemon_species.name}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</body>
+</html>
