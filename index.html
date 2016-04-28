@@ -5,6 +5,7 @@
   <title>ngPokemon</title>
   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
   <script src="/bower_components/angular/angular.js"></script>
+  <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
   <script src="/main.js"></script>
 </head>
 <body ng-app='pokeApp' ng-controller='mainCtrl'>
@@ -19,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat='pokemon in pokeList'>
+        <tr ng-repeat='pokemon in pokeList' ng-click='selectPokemon(pokemon)'>
           <td>{{pokemon.entry_number}}</td>
           <td>{{pokemon.pokemon_species.name}}</td>
         </tr>
