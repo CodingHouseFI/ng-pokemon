@@ -1,12 +1,21 @@
 'use strict';
 
 var app = angular.module('pokeApp', ['ui.bootstrap'])
-.controller('mainCtrl', function($scope, $http, $uibModal) {
 
-  $http({
-    url: 'http://pokeapi.co/api/v2/pokedex/1/',
-    method: 'GET'
-  })
+.service('Pokemon', function($http) {
+
+  this.getAll = function() {
+    return $http({
+      url: 'http://pokeapi.co/api/v2/pokedex/1/',
+      method: 'GET'
+    });
+  };
+
+})
+
+.controller('mainCtrl', function($scope, Pokemon, $uibModal) {
+
+  Pokemon.getAll()
   .then(function(res) {
     $scope.pokeList = res.data.pokemon_entries;
   })
